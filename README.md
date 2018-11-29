@@ -13,7 +13,7 @@ PHP Validator works with PHP  >= 5.6
 ```
 require __DIR__ . '/vendor/autoload.php';
 
-use nanaksr\validator;
+use nanaksr\validator as vldtn;
 
 $params = []; //From your HTML Form parameters
 
