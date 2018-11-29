@@ -86,27 +86,34 @@ class validation extends rules
         }
         else
         {
-            if (method_exists(new rules, $datarules))
+            if ($this->paramValue == '' || is_null($this->paramValue) || empty($this->paramValue) || $this->paramValue == null)
             {
-                $push = $this->{$datarules}($this->paramValue);
-                if (!$push){
-                    $this->Errors[$this->paramKey] = $this->builErrMsg('input');
-                }
+               $this->Errors[$this->paramKey] = $this->builErrMsg('required');
             }
             else
             {
-                if (is_array($datarules)){
-                    if(!preg_match('/^('.implode('|', $datarules).')$/', $this->paramValue)){
-                        $this->Errors[$this->paramKey] = $this->builErrMsg('select');
+                if (method_exists(new rules, $datarules))
+                {
+                    $push = $this->{$datarules}($this->paramValue);
+                    if (!$push){
+                        $this->Errors[$this->paramKey] = $this->builErrMsg('input');
                     }
                 }
                 else
                 {
-                    if (!preg_match($datarules, $this->paramValue)){
-                    $this->Errors[$this->paramKey] = $this->builErrMsg('input');
+                    if (is_array($datarules)){
+                        if(!preg_match('/^('.implode('|', $datarules).')$/', $this->paramValue)){
+                            $this->Errors[$this->paramKey] = $this->builErrMsg('select');
+                        }
                     }
+                    else
+                    {
+                        if (!preg_match($datarules, $this->paramValue)){
+                        $this->Errors[$this->paramKey] = $this->builErrMsg('input');
+                        }
+                    }
+                    $this->Results[$this->paramKey] = $this->paramValue;
                 }
-                $this->Results[$this->paramKey] = $this->paramValue;
             }
         }
         unset($this->name);
