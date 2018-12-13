@@ -8,7 +8,7 @@ class rules
 {
     protected function ValidateFullName($value){
         $this->Results[$this->paramKey] = Ucwords(rtrim($value));
-        if (!preg_match("/^[A-Za-z]([a-zA-Z. ]{2,100}[a-zA-Z.]{1})$/",$value)){
+        if (!preg_match("/^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/",$value)){
             return false;
         }
         return true;
